@@ -22,7 +22,7 @@ const lsdb = (dbname) => {
       if (data.some((value) => typeof value !== "string")) {
         throw new Error("All values must be string");
       }
-      data.forEach((value) => (localData[value] = []));
+      data.forEach((value) => (localData[value] = localData[value] ?? []));
       localStorage.setItem(dbname, JSON.stringify(localData));
     } catch (e) {
       console.error(e.name + ": " + e.message);
