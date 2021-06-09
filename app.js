@@ -4,19 +4,20 @@ const {
 
 db.collection(['restaurants'])
 
-let isEditable = false;
+
 
 function printList() {
-    const restaurantsList = db.get("restaurants");
+    let restaurantsList = db.get("restaurants");
 
     document.getElementById("list").innerHTML = ''
 
     restaurantsList.forEach(element => {
         document.getElementById("list").innerHTML += `
         <li>
-            <p class="title-name">${element.title}</p>
+            <p class="title-name" id="title-name2">${element.title}</p>
             <div id="button-box">
             <button class="edit">Edit</button>
+            <button class="save">Save</button>
             <button class="remove">x</button>
             </div>
         </li>
@@ -25,6 +26,7 @@ function printList() {
 
     const btnEdit = document.querySelectorAll(".edit")
     const btnRemove = document.querySelectorAll(".remove")
+    const btnSave = document.querySelectorAll(".save")
 
 
     Array.from(btnEdit).forEach(btn => {
@@ -35,13 +37,38 @@ function printList() {
             title.setAttribute('contenteditable', true)
         })
     })
-    // Array.from(btnRemove).forEach(btn => {
-    //     btn.addEventListener('click', function () {
-    //         db.remove("restaurants", {
-    //             id: newObj.id
-    //         });
-    //     })
-    // })
+    Array.from(btnSave).forEach(btn => {
+        btn.addEventListener('click', function ({
+            target
+        }) {
+            const newTitle = target.parentElement.parentElement.querySelector('.title-name').textContent;
+            console.log(newTitle);
+            // db.update("restaurants", { title: newTitle }, {data: { restaurantsList }});
+        })
+    })
+    Array.from(btnRemove).forEach(btn => {
+        btn.addEventListener('click', function ({
+            target
+        }) {
+            const theName = target.parentElement.parentElement.querySelector('.title-name').textContent
+            db.remove("restaurants", {
+                title: theName
+            });
+
+            
+            // const found = restaurantsList.findIndex((restaurant, index) => {
+            //     if(restaurant.title == theName) return true;
+            // });
+            //  restaurantsList.splice(found, 1)
+            
+
+            const newList = restaurantsList.filter((restaurant) => restaurant.title != theName);
+            restaurantsList = newList;
+            window.location.reload();
+
+
+        })
+    })
 }
 
 document.onload = printList()
@@ -71,8 +98,4 @@ function create() {
     printList()
 
     form.reset()
-}
-
-function remove() {
-    
 }
