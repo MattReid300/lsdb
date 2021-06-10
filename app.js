@@ -15,10 +15,10 @@ function printList() {
         document.getElementById("list").innerHTML += `
         <li>
             <p class="title-name" id="title-name2">${element.title}</p>
-            <div id="button-box">
-            <button class="edit">Edit</button>
-            <button class="save">Save</button>
-            <button class="remove">x</button>
+            <div class="button-box">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-save" data-id="${element._id}">Save</button>
+                <button class="btn-remove">x</button>
             </div>
         </li>
     `;
@@ -41,9 +41,9 @@ function printList() {
         btn.addEventListener('click', function ({
             target
         }) {
-            const newTitle = target.parentElement.parentElement.querySelector('.title-name').textContent;
-            console.log(newTitle);
-            // db.update("restaurants", { title: newTitle }, {data: { restaurantsList }});
+            const _id = Number(target.getAttribute('data-id'))
+            const title = target.parentElement.parentElement.querySelector('.title-name').textContent;
+            db.update("restaurants", { _id }, { title });
         })
     })
     Array.from(btnRemove).forEach(btn => {
@@ -54,19 +54,7 @@ function printList() {
             db.remove("restaurants", {
                 title: theName
             });
-
-            
-            // const found = restaurantsList.findIndex((restaurant, index) => {
-            //     if(restaurant.title == theName) return true;
-            // });
-            //  restaurantsList.splice(found, 1)
-            
-
-            const newList = restaurantsList.filter((restaurant) => restaurant.title != theName);
-            restaurantsList = newList;
-            window.location.reload();
-
-
+            printList();
         })
     })
 }

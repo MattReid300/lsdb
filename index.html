@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
 
@@ -9,17 +10,17 @@
 <body>
     <div id="app">
         <h1>JS Local Project</h1>
-        <div class="flex">
+        <div class="flex1">
             <div class="create">
                 <h3>Create New</h3>
                 <form name="restaurantsForm">
                     <label>Name: </label>
-                    <input type="text" id="txt1" name="title" required>
+                    <input type="text" id="txt1" name="title" maxlength="30" required>
                     <br />
                     <br />
                     <label>Description (brief): </label>
                     <br />
-                    <textarea id="txt2" cols="30" rows="5" name="body" required></textarea>
+                    <textarea id="txt2" name="body" required></textarea>
                     <br />
                     <br />
                     <label>Rating (/5 stars): </label>
